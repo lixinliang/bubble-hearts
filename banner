@@ -1,0 +1,4 @@
+@ProjectName <%= pkg.name %>
+@Version <%= pkg.version %>
+@Author <%= pkg.author.name %>(<%= pkg.author.url %>)
+@Update <%= moment().format('YYYY-MM-DD h:mm:ss a') %>
