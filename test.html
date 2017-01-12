@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="format-detection" content="telephone=no,address=no,email=no">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title> Bubble Hearts </title>
+    <script src="./bubble-hearts.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.0.5/es6-promise.js" charset="utf-8"></script>
+    <style media="screen">
+        canvas {
+            display: block;
+            cursor: pointer;
+            margin: 30px auto;
+            box-shadow: 0 0 5px 5px #bbb;
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+        }
+    </style>
+</head>
+<body>
+    <script type="text/javascript">
+        // Images resource
+        var assets = [
+            './img/like01.png',
+            './img/like02.png',
+            './img/like03.png',
+        ];
+        assets.forEach(function ( src, index ) {
+            assets[index] = new Promise(function ( resolve ) {
+                var img = new Image;
+                img.onload = resolve.bind(null, img);
+                img.src = src;
+            });
+        });
+
+        // Images preload
+        Promise.all(assets).then(function ( images ) {
+
+            var random = {
+                uniform : function ( min, max ) {
+                    return min + (max - min) * Math.random();
+                },
+                uniformDiscrete : function ( i, j ) {
+                    return i + Math.floor((j - i + 1) * random.uniform(0, 1));
+                },
+            };
+
+            // Init stage
+            var stage = new BubbleHearts();
+            var canvas = stage.canvas;
+            canvas.width = 200;
+            canvas.height = 400;
+            canvas.style['width'] = '200px';
+            canvas.style['height'] = '400px';
+            document.body.appendChild(canvas);
+
+            // Bubble animation as default
+            setInterval(function () {
+                stage.bubble(images[random.uniformDiscrete(0, images.length - 1)]);
+            }, 700);
+
+            // Bubble animation as custom
+            canvas.addEventListener('click', function () {
+                let image = images[random.uniformDiscrete(0, images.length - 1)];
+                stage.bubble(image, 3000, function ( lifespan ) {
+                    // You got its lifespan, and from 1 to 0
+                    if (lifespan >= 0) {
+                        stage.context.drawImage(
+                            image,
+                            (canvas.width - image.width) / 2,
+                            // lifespan control its positionY, so that it will look like fly up
+                            (canvas.height - image.height) * lifespan,
+                            image.width,
+                            image.height
+                        );
+                    } else {
+                        // Return true to free the memory
+                        return true;
+                    }
+                });
+            }, false);
+        });
+    </script>
+</body>
+</html>
