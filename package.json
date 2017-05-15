@@ -1,6 +1,6 @@
 {
   "name": "bubble-hearts",
-  "version": "0.0.5",
+  "version": "1.0.0",
   "description": "(<3kb) 💖Bubble hearts animation.",
   "main": "./bubble-hearts.min.js",
   "scripts": {
