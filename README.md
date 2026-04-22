@@ -1,7 +1,6 @@
 [![npm](https://img.shields.io/npm/l/bubble-hearts.svg)](https://www.npmjs.org/package/bubble-hearts)
 [![npm](https://img.shields.io/npm/v/bubble-hearts.svg)](https://www.npmjs.org/package/bubble-hearts)
 [![npm](https://img.shields.io/npm/dm/bubble-hearts.svg)](https://www.npmjs.org/package/bubble-hearts)
-[![Twitter](https://img.shields.io/badge/twitter-@qq393464140-blue.svg)](http://twitter.com/qq393464140)
 
 # bubble-hearts
 > (<3kb) 💖Bubble hearts animation.（Canvas 实现直播间点赞动画）
